@@ -1,6 +1,6 @@
 import {
   AnimatedScrollModal,
   AnimatedScrollModalRef
-} from "./src/AnimatedScrollModal";
+} from "./AnimatedScrollModal";
 
 export { AnimatedScrollModal, AnimatedScrollModalRef };

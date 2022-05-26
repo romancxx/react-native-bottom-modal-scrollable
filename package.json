@@ -7,8 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-native": ">=0.60.0"
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": ">=1.10.1",
+    "react-native-reanimated": ">=2.2.0"
   },
   "dependencies": {
     "react-native-reanimated": "^2.4.1",
@@ -49,6 +51,7 @@
     "snapping",
     "component"
   ],
-  "author": "Roman Cirier",
-  "license": "ISC"
+  "license": "MIT",
+  "repository": "https://github.com/Nazort/animated-scroll-modal",
+  "author": "Roman Cirier <roman.cirier@gmail.com> (https://github.com/Nazort)"
 }
