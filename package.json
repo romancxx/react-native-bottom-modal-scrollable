@@ -1,6 +1,6 @@
 {
   "name": "react-native-animated-scroll-modal",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Animated Modal component for React Native, A modal that can be extended using the finger and once the maximum height is reached the content will then start scrolling itself without having to release the finger. Compatible with Android & iOS.",
   "main": "index.ts",
   "scripts": {
