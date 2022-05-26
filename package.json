@@ -1,0 +1,54 @@
+{
+  "name": "react-native-animated-scroll-modal",
+  "version": "0.0.1",
+  "description": "Animated Modal component for React Native, A modal that can be extended using the finger and once the maximum height is reached the content will then start scrolling itself without having to release the finger. Compatible with Android & iOS.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-native": ">=0.60.0"
+  },
+  "dependencies": {
+    "react-native-reanimated": "^2.4.1",
+    "react-native-gesture-handler": "^1.6.1",
+    "styled-components": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.46",
+    "@types/react-native": "^0.63.4",
+    "@typescript-eslint/eslint-plugin": "3.8.0",
+    "@typescript-eslint/parser": "3.8.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.6.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-config-standard-react": "9.2.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-react": "7.20.5",
+    "eslint-plugin-standard": "4.0.1",
+    "typescript": "3.9.7"
+  },
+  "keywords": [
+    "react-native",
+    "modal",
+    "animated",
+    "scrollable",
+    "smooth",
+    "react",
+    "native",
+    "flatlist",
+    "scrollview",
+    "scroll",
+    "scrolling",
+    "snap",
+    "android",
+    "ios",
+    "snapping",
+    "component"
+  ],
+  "author": "Roman Cirier",
+  "license": "ISC"
+}
