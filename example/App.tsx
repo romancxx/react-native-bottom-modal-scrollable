@@ -17,7 +17,6 @@ const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 const App = () => {
   const modalRef = useRef<AnimatedScrollModalRef>(null);
-
   const openModal = () => {
     modalRef?.current?.open();
   };
@@ -43,14 +42,14 @@ const App = () => {
         <Text style={{color: 'yellow', fontSize: 99}}>Hello</Text>
       </View>
       <AnimatedScrollModal
-        // screenHeight={SCREEN_HEIGHT - 200}
+        screenHeight={SCREEN_HEIGHT - 200}
         backgroundClickable
         ref={modalRef}
         backgroundColor={'blue'}
         disableBackgroundOpacity
         disableCloseOnBackgroundPress
         disableSnapToBottom
-        containerStyle={{paddingBottom: 100}}
+        // containerStyle={{paddingBottom: 100}}
         children={
           <View style={{backgroundColor: 'red'}}>
             <Text>
@@ -87,6 +86,18 @@ const App = () => {
             <Text style={{color: 'blue', fontSize: 50}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 50}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 50}}>Hello</Text>
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(_item => {
+              return (
+                <View
+                  style={{
+                    backgroundColor: 'orange',
+                    height: 100,
+                    width: 100,
+                    marginLeft: 10,
+                  }}
+                />
+              );
+            })}
             <FlatList
               data={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}
               horizontal
@@ -144,7 +155,7 @@ const App = () => {
         }
       /> */}
 
-      {/* <View
+      <View
         style={{
           height: 200,
           width: '100%',
@@ -154,7 +165,7 @@ const App = () => {
           bottom: 0,
         }}>
         <Text style={{color: 'yellow', fontSize: 99}}>Hello</Text>
-      </View> */}
+      </View>
     </GestureHandlerRootView>
   );
 };

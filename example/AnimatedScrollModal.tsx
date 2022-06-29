@@ -95,9 +95,9 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       children,
       backgroundColor = '#fff',
       absoluteBottomChildren,
-      maxModalHeight = MAX_MODAL_HEIGHT,
       scrollIndicator = true,
       screenHeight = SCREEN_HEIGHT,
+      maxModalHeight = screenHeight ? screenHeight * 0.9 : MAX_MODAL_HEIGHT,
       defaultModalHeight = maxModalHeight < DEFAULT_MODAL_HEIGHT
         ? maxModalHeight
         : screenHeight / 2,
