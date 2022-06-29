@@ -14,7 +14,7 @@ import {
 import {FlatList, GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
-
+// TODO: IN DOC BACKGROUND CLICKABLE DOESNT WORK WITH ABSOLUTE BOTTOM CHILDREN
 const App = () => {
   const modalRef = useRef<AnimatedScrollModalRef>(null);
   const openModal = () => {
@@ -42,17 +42,17 @@ const App = () => {
         <Text style={{color: 'yellow', fontSize: 99}}>Hello</Text>
       </View>
       <AnimatedScrollModal
-        screenHeight={SCREEN_HEIGHT - 200}
-        backgroundClickable
+        // screenHeight={SCREEN_HEIGHT - 200}
+        // backgroundClickable
         ref={modalRef}
         backgroundColor={'blue'}
-        disableBackgroundOpacity
-        disableCloseOnBackgroundPress
-        disableSnapToBottom
+        // disableBackgroundOpacity
+        // disableCloseOnBackgroundPress
+        // disableSnapToBottom
         // containerStyle={{paddingBottom: 100}}
         children={
           <View style={{backgroundColor: 'red'}}>
-            <Text>
+            {/* <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
               interdum mauris eget nunc ultrices lacinia. Pellentesque eget
               tortor in quam consequat luctus. Nam laoreet ultricies suscipit.
@@ -120,8 +120,8 @@ const App = () => {
             <Text style={{color: 'blue', fontSize: 50}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
-            <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
-            <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
+            <Text style={{color: 'blue', fontSize: 99}}>Hello</Text> */}
+            {/* <Text style={{color: 'blue', fontSize: 99}}>Hello</Text> */}
             <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
             <Text style={{color: 'blue', fontSize: 99}}>Hello</Text>
@@ -130,19 +130,19 @@ const App = () => {
             <Text style={{color: 'yellow', fontSize: 99}}>END</Text>
           </View>
         }
-        // absoluteBottomChildren={{
-        //   children: (
-        //     <View
-        //       style={{
-        //         height: 100,
-        //         width: Dimensions.get('window').width,
-        //         backgroundColor: 'yellow',
-        //       }}
-        //     />
-        //   ),
-        //   height: 100,
-        //   position: 0,
-        // }}
+        absoluteBottomChildren={{
+          children: (
+            <View
+              style={{
+                height: 100,
+                width: Dimensions.get('window').width,
+                backgroundColor: 'yellow',
+              }}
+            />
+          ),
+          height: 100,
+          position: 0,
+        }}
       />
       {/* <AnimatedScrollModal
         ref={modalRef}
@@ -155,7 +155,7 @@ const App = () => {
         }
       /> */}
 
-      <View
+      {/* <View
         style={{
           height: 200,
           width: '100%',
@@ -165,7 +165,7 @@ const App = () => {
           bottom: 0,
         }}>
         <Text style={{color: 'yellow', fontSize: 99}}>Hello</Text>
-      </View>
+      </View> */}
     </GestureHandlerRootView>
   );
 };

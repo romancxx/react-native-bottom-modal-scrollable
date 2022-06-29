@@ -282,7 +282,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       }
       const { height } = event.nativeEvent.layout;
       // Use content of children view to define scroll limit
-      if (height < maxModalHeight) {
+      if (height + additionalHeight < maxModalHeight) {
         setContentHeight(0);
         return;
       }
