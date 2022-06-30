@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "standard-version",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git-cz"
   },
   "peerDependencies": {
     "react": "*",
@@ -57,5 +58,10 @@
   ],
   "license": "MIT",
   "repository": "https://github.com/Nazort/animated-scroll-modal",
-  "author": "Roman Cirier <roman.cirier@gmail.com> (https://github.com/Nazort)"
+  "author": "Roman Cirier <roman.cirier@gmail.com> (https://github.com/Nazort)",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
 }
