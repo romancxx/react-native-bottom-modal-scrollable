@@ -32,7 +32,7 @@ import Animated, {
   interpolate,
   runOnJS
 } from "react-native-reanimated";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
 
 //TODO: ADD README
 //TODO: ADD GITIGNORE
@@ -345,13 +345,15 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                     <ScrollIndicator />
                   </ContainerScrollIndicator>
                 )}
-                <Animated.View
-                  style={[scrollContentTranslationStyle, containerStyle]}
-                  onLayout={onLayout}
-                  {...{ backgroundColor }}
-                >
-                  {children}
-                </Animated.View>
+                <ScrollView scrollEnabled={false}>
+                  <Animated.View
+                    style={[scrollContentTranslationStyle, containerStyle]}
+                    onLayout={onLayout}
+                    {...{ backgroundColor }}
+                  >
+                    {children}
+                  </Animated.View>
+                </ScrollView>
               </AnimatedContainerModal>
             </PanGestureHandler>
             {absoluteBottomChildren && (
