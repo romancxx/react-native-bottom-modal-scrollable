@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.6](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.5...v0.6.6) (2022-07-05)
+
+
+### Bug Fixes
+
+* **snap:** fixing snapping points always returning top when max modal height is small ([d0c094e](https://github.com/Nazort/animated-scroll-modal/commit/d0c094ea00f7a8f1ae3d0795edd9d3d5d68beaf8))
+
 ### [0.6.5](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.4...v0.6.5) (2022-06-30)
 
 ### [0.6.4](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.3...v0.6.4) (2022-06-30)
