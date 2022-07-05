@@ -2,16 +2,16 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useState,
-  ReactNode
-} from "react";
+  ReactNode,
+} from 'react';
 import {
   Dimensions,
   Keyboard,
   LayoutChangeEvent,
   StyleProp,
   TouchableWithoutFeedback,
-  ViewStyle
-} from "react-native";
+  ViewStyle,
+} from 'react-native';
 import {
   BackgroundOpacity,
   ContainerNonClickable,
@@ -20,8 +20,8 @@ import {
   ScrollIndicator,
   ContainerActionButtons,
   ContainerModal,
-  SCROLLABLE_INDICATOR_HEIGHT
-} from "./styled/AnimatedScrollModal.styled";
+  SCROLLABLE_INDICATOR_HEIGHT,
+} from './styled/AnimatedScrollModal.styled';
 import Animated, {
   useSharedValue,
   useAnimatedGestureHandler,
@@ -30,9 +30,9 @@ import Animated, {
   withDecay,
   withSpring,
   interpolate,
-  runOnJS
-} from "react-native-reanimated";
-import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
+  runOnJS,
+} from 'react-native-reanimated';
+import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
 
 //TODO: ADD README
 //TODO: ADD GITIGNORE
@@ -45,8 +45,8 @@ export type AnimatedScrollModalRef = {
 };
 
 enum SnapPoint {
-  Top = "Top",
-  Bottom = "Bottom"
+  Top = 'Top',
+  Bottom = 'Bottom',
 }
 
 interface AbsoluteBottomChildren {
@@ -61,7 +61,7 @@ interface AbsoluteBottomChildren {
 interface Props {
   children: ReactNode;
   absoluteBottomChildren?: AbsoluteBottomChildren;
-  backgroundColor: string;
+  backgroundColor?: string;
   defaultModalHeight?: number;
   maxModalHeight?: number;
   contentStaticHeight?: number;
@@ -76,7 +76,7 @@ interface Props {
 }
 
 export const HIGH_VELOCITY = 1500; // Instant snap to point velocity
-const SCREEN_HEIGHT: number = Dimensions.get("window").height;
+const SCREEN_HEIGHT: number = Dimensions.get('window').height;
 const MAX_MODAL_HEIGHT = SCREEN_HEIGHT * 0.9;
 const DEFAULT_MODAL_HEIGHT = SCREEN_HEIGHT / 2;
 const ACTION_BUTTONS_MAX_OPACITY = DEFAULT_MODAL_HEIGHT / 2;
@@ -85,7 +85,7 @@ const ACTION_BUTTONS_MIN_OPACITY = DEFAULT_MODAL_HEIGHT / 4;
 const AnimatedBackgroundOpacity =
   Animated.createAnimatedComponent(BackgroundOpacity);
 const AnimatedContainerActionButtons = Animated.createAnimatedComponent(
-  ContainerActionButtons
+  ContainerActionButtons,
 );
 const AnimatedContainerModal = Animated.createAnimatedComponent(ContainerModal);
 
@@ -93,7 +93,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
   (
     {
       children,
-      backgroundColor = "#fff",
+      backgroundColor = '#fff',
       absoluteBottomChildren,
       scrollIndicator = true,
       screenHeight = SCREEN_HEIGHT,
@@ -107,9 +107,9 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       disableBackgroundOpacity = false,
       disableCloseOnBackgroundPress = false,
       disableSnapToBottom = false,
-      backgroundClickable = false
+      backgroundClickable = false,
     }: Props,
-    ref: React.Ref<AnimatedScrollModalRef>
+    ref: React.Ref<AnimatedScrollModalRef>,
   ) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [contentHeight, setContentHeight] = useState<number>(0);
@@ -130,14 +130,14 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       ref,
       () => ({
         open,
-        close
-      })
+        close,
+      }),
     );
 
     const open = () => {
       setModalVisible(true);
       translateYModal.value = withTiming(screenHeight - defaultModalHeight, {
-        duration: 500
+        duration: 500,
       });
       translateYLevelIndicator.value = screenHeight - defaultModalHeight;
       translateYContent.value = 0;
@@ -206,7 +206,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
           // Currently scrolling content, using Decay to do scroll animation
           translateYContent.value = withDecay({
             velocity: evt.velocityY,
-            clamp: [contentHeight, 0]
+            clamp: [contentHeight, 0],
           });
         } else {
           // Currently scrolling modal height : will snap to offset..
@@ -222,7 +222,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                   maxModalHeight,
                   screenHeight,
                   disableSnapToBottom,
-                  defaultModalHeight
+                  defaultModalHeight,
                 )
               : snapToPoint(
                   SnapPoint.Top,
@@ -232,15 +232,15 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                   maxModalHeight,
                   screenHeight,
                   disableSnapToBottom,
-                  defaultModalHeight
+                  defaultModalHeight,
                 );
           }
-          // Snaping to the closest point
+          // Snapping to the closest point
           if (
             Math.abs(
-              translationY + ctx.offsetY - (screenHeight - maxModalHeight)
-            ) > //Top snap point
-            Math.abs(maxModalHeight - (translationY + ctx.offsetY)) // Bottom snap point
+              maxModalHeight - (screenHeight - (translationY + ctx.offsetY)),
+            ) > // Top snap point
+            Math.abs(screenHeight - (translationY + ctx.offsetY)) // Bottom snap point
           ) {
             snapToPoint(
               SnapPoint.Bottom,
@@ -250,7 +250,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
               maxModalHeight,
               screenHeight,
               disableSnapToBottom,
-              defaultModalHeight
+              defaultModalHeight,
             );
           } else {
             snapToPoint(
@@ -261,11 +261,11 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
               maxModalHeight,
               screenHeight,
               disableSnapToBottom,
-              defaultModalHeight
+              defaultModalHeight,
             );
           }
         }
-      }
+      },
     });
 
     const onLayout = (event: LayoutChangeEvent) => {
@@ -276,7 +276,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
 
       if (contentStaticHeight) {
         setContentHeight(
-          -Math.abs(contentStaticHeight - maxModalHeight + additionalHeight)
+          -Math.abs(contentStaticHeight - maxModalHeight + additionalHeight),
         );
         return;
       }
@@ -294,9 +294,9 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
         translateYModal.value,
         [
           screenHeight - ACTION_BUTTONS_MIN_OPACITY,
-          screenHeight - ACTION_BUTTONS_MAX_OPACITY
+          screenHeight - ACTION_BUTTONS_MAX_OPACITY,
         ],
-        [0, 1]
+        [0, 1],
       );
 
       return { opacity };
@@ -306,7 +306,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       const opacity = interpolate(
         translateYModal.value,
         [screenHeight, screenHeight - maxModalHeight],
-        [0, !disableBackgroundOpacity ? 0.8 : 0]
+        [0, !disableBackgroundOpacity ? 0.8 : 0],
       );
 
       return { opacity };
@@ -330,16 +330,14 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
           <Container>
             <TouchableWithoutFeedback
               disabled={disableCloseOnBackgroundPress}
-              onPress={() => close()}
-            >
+              onPress={() => close()}>
               <AnimatedBackgroundOpacity style={backgroundOpacityStyle} />
             </TouchableWithoutFeedback>
             <PanGestureHandler onGestureEvent={onGestureEvent}>
               <AnimatedContainerModal
                 height={maxModalHeight}
                 backgroundColor={backgroundColor}
-                style={scrollModalTranslationStyle}
-              >
+                style={scrollModalTranslationStyle}>
                 {scrollIndicator && (
                   <ContainerScrollIndicator {...{ backgroundColor }}>
                     <ScrollIndicator />
@@ -349,8 +347,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                   <Animated.View
                     style={[scrollContentTranslationStyle, containerStyle]}
                     onLayout={onLayout}
-                    {...{ backgroundColor }}
-                  >
+                    {...{ backgroundColor }}>
                     {children}
                   </Animated.View>
                 </ScrollView>
@@ -359,8 +356,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
             {absoluteBottomChildren && (
               <AnimatedContainerActionButtons
                 bottom={absoluteBottomChildren?.position ?? 0}
-                style={actionButtonsStyle}
-              >
+                style={actionButtonsStyle}>
                 {absoluteBottomChildren.children}
               </AnimatedContainerActionButtons>
             )}
@@ -368,7 +364,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
         )}
       </>
     );
-  }
+  },
 );
 
 // Worklet cannot be declared in the body of the component
@@ -380,16 +376,16 @@ const snapToPoint = (
   maxModalHeight: number,
   screenHeight: number,
   disableSnapToBottom: boolean,
-  defaultModalHeight: number
+  defaultModalHeight: number,
 ) => {
-  "worklet";
+  'worklet';
   switch (point) {
     case SnapPoint.Top:
       // Snap up to open fully the modal
       translateYModal.value = withSpring(screenHeight - maxModalHeight, {
         velocity: velocityY,
         overshootClamping: true,
-        damping: 20
+        damping: 20,
       });
       break;
     case SnapPoint.Bottom:
@@ -400,14 +396,14 @@ const snapToPoint = (
           velocity: velocityY,
           overshootClamping: true,
           damping: 20,
-          stiffness: 150
+          stiffness: 150,
         },
         () => {
           if (disableSnapToBottom) {
             return;
           }
           runOnJS(close)();
-        }
+        },
       );
       break;
     default:
