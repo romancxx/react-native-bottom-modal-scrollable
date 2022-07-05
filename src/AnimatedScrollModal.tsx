@@ -18,7 +18,7 @@ import {
   ContainerClickable,
   ContainerScrollIndicator,
   ScrollIndicator,
-  ContainerActionButtons,
+  ContainerFooter,
   ContainerModal,
   SCROLLABLE_INDICATOR_HEIGHT,
 } from './styled/AnimatedScrollModal.styled';
@@ -38,7 +38,8 @@ import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
 //TODO: ADD GITIGNORE
 //TODO: ADD INDICATOR CUSTOM STYLE
 //TODO: ADD SNAP TO MID OFFSET?
-
+// TODO: SHAKE ON DRAG ?
+// TODO: ON END REACH
 export type AnimatedScrollModalRef = {
   open: () => void;
   close: () => void;
@@ -49,18 +50,17 @@ enum SnapPoint {
   Bottom = 'Bottom',
 }
 
-interface AbsoluteBottomChildren {
-  children: ReactNode;
+interface AbsoluteFooter {
+  component: ReactNode;
   position?: number;
-  // Use this variable only if the bottom children is covering the bottom of scrollview
-  // Providing a height will make the scrollview height bigger so that it's possible to scroll it and see the content hidden by the
-  // absolute bottom children
+  // Use this variable if the footer is covering the end of the content of your modal scroll view
+  // Providing a height will make the scroll view of the content bigger
   height?: number;
 }
 
 interface Props {
   children: ReactNode;
-  absoluteBottomChildren?: AbsoluteBottomChildren;
+  footer?: AbsoluteFooter;
   backgroundColor?: string;
   defaultModalHeight?: number;
   maxModalHeight?: number;
@@ -84,9 +84,8 @@ const ACTION_BUTTONS_MIN_OPACITY = DEFAULT_MODAL_HEIGHT / 4;
 
 const AnimatedBackgroundOpacity =
   Animated.createAnimatedComponent(BackgroundOpacity);
-const AnimatedContainerActionButtons = Animated.createAnimatedComponent(
-  ContainerActionButtons,
-);
+const AnimatedContainerFooter =
+  Animated.createAnimatedComponent(ContainerFooter);
 const AnimatedContainerModal = Animated.createAnimatedComponent(ContainerModal);
 
 export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
@@ -94,7 +93,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     {
       children,
       backgroundColor = '#fff',
-      absoluteBottomChildren,
+      footer,
       scrollIndicator = true,
       screenHeight = SCREEN_HEIGHT,
       maxModalHeight = screenHeight ? screenHeight * 0.9 : MAX_MODAL_HEIGHT,
@@ -269,9 +268,9 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     });
 
     const onLayout = (event: LayoutChangeEvent) => {
-      // Represents the height of the absoluteBottomChildren hiding the scroll view
+      // Represents the height of the fotter hiding the scroll view
       const additionalHeight =
-        (absoluteBottomChildren?.height ?? 0) +
+        (footer?.height ?? 0) +
         (scrollIndicator ? SCROLLABLE_INDICATOR_HEIGHT : 0);
 
       if (contentStaticHeight) {
@@ -353,12 +352,12 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                 </ScrollView>
               </AnimatedContainerModal>
             </PanGestureHandler>
-            {absoluteBottomChildren && (
-              <AnimatedContainerActionButtons
-                bottom={absoluteBottomChildren?.position ?? 0}
+            {footer && (
+              <AnimatedContainerFooter
+                bottom={footer?.position ?? 0}
                 style={actionButtonsStyle}>
-                {absoluteBottomChildren.children}
-              </AnimatedContainerActionButtons>
+                {footer.component}
+              </AnimatedContainerFooter>
             )}
           </Container>
         )}

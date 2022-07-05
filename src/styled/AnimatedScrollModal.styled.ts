@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import styled from "styled-components";
+import { View } from 'react-native';
+import styled from 'styled-components';
 export const SCROLLABLE_INDICATOR_HEIGHT = 25;
 
 export const ContainerNonClickable = styled(View)`
@@ -38,8 +38,8 @@ export const ContainerModal = styled(View)<ContainerModalProps>`
   overflow: hidden;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  background-color: ${(props) => props.backgroundColor};
-  height: ${(props) => props.height}px;
+  background-color: ${props => props.backgroundColor};
+  height: ${props => props.height}px;
 `;
 
 interface BgColorProps {
@@ -52,7 +52,7 @@ export const ContainerScrollIndicator = styled(View)<BgColorProps>`
   align-items: center;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${props => props.backgroundColor};
   z-index: 2;
 `;
 
@@ -63,13 +63,12 @@ export const ScrollIndicator = styled(View)`
   border-radius: ${15}px;
 `;
 
-interface ContainerActionButtonsProps {
+interface ContainerFooterProps {
   bottom: number;
 }
 
-export const ContainerActionButtons = styled(View)<ContainerActionButtonsProps>`
+export const ContainerFooter = styled(View)<ContainerFooterProps>`
   position: absolute;
-  /* z-index: 99999999; */
   right: 0px;
-  bottom: ${(props) => props.bottom}px;
+  bottom: ${props => props.bottom}px;
 `;
