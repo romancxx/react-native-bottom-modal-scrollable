@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import {View} from 'react-native';
 import styled from 'styled-components';
 export const SCROLLABLE_INDICATOR_HEIGHT = 25;
 

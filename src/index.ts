@@ -1,6 +1,6 @@
-import {
-  AnimatedScrollModal,
-  AnimatedScrollModalRef
-} from "./AnimatedScrollModal";
+import { AnimatedScrollModal } from './AnimatedScrollModal';
+import { AnimatedScrollModalRef } from './types';
 
-export { AnimatedScrollModal, AnimatedScrollModalRef };
+export { AnimatedScrollModal };
+
+export type { AnimatedScrollModalRef };

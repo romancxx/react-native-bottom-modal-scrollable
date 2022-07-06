@@ -5,8 +5,6 @@ import React, {
   ReactNode,
 } from 'react';
 import {
-  Dimensions,
-  Keyboard,
   LayoutChangeEvent,
   StyleProp,
   TouchableWithoutFeedback,
@@ -24,39 +22,26 @@ import {
 } from './styled/AnimatedScrollModal.styled';
 import Animated, {
   useSharedValue,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   withTiming,
-  withDecay,
-  withSpring,
   interpolate,
-  runOnJS,
 } from 'react-native-reanimated';
 import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
+import { useScrollHandler } from './hooks/useScrollHandler';
+import {
+  DEFAULT_MODAL_HEIGHT,
+  FOOTER_MAX_OPACITY_POS,
+  FOOTER_MIN_OPACITY_POS,
+  MAX_MODAL_HEIGHT,
+  WINDOW_HEIGHT,
+} from './constants';
+import { AbsoluteFooter, AnimatedScrollModalRef } from './types';
 
 //TODO: ADD README
 //TODO: ADD GITIGNORE
 //TODO: ADD INDICATOR CUSTOM STYLE
 //TODO: ADD SNAP TO MID OFFSET?
 // TODO: SHAKE ON DRAG ?
-// TODO: ON END REACH
-export type AnimatedScrollModalRef = {
-  open: () => void;
-  close: () => void;
-};
-
-enum SnapPoint {
-  Top = 'Top',
-  Bottom = 'Bottom',
-}
-
-interface AbsoluteFooter {
-  component: ReactNode;
-  position?: number;
-  // Use this variable if the footer is covering the end of the content of your modal scroll view
-  // Providing a height will make the scroll view of the content bigger
-  height?: number;
-}
 
 interface Props {
   children: ReactNode;
@@ -73,14 +58,9 @@ interface Props {
   disableCloseOnBackgroundPress?: boolean;
   disableSnapToBottom?: boolean;
   backgroundClickable?: boolean;
+  onEndReached?: () => void;
+  onEndReachedThreshold?: number;
 }
-
-export const HIGH_VELOCITY = 1500; // Instant snap to point velocity
-const SCREEN_HEIGHT: number = Dimensions.get('window').height;
-const MAX_MODAL_HEIGHT = SCREEN_HEIGHT * 0.9;
-const DEFAULT_MODAL_HEIGHT = SCREEN_HEIGHT / 2;
-const ACTION_BUTTONS_MAX_OPACITY = DEFAULT_MODAL_HEIGHT / 2;
-const ACTION_BUTTONS_MIN_OPACITY = DEFAULT_MODAL_HEIGHT / 4;
 
 const AnimatedBackgroundOpacity =
   Animated.createAnimatedComponent(BackgroundOpacity);
@@ -95,7 +75,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       backgroundColor = '#fff',
       footer,
       scrollIndicator = true,
-      screenHeight = SCREEN_HEIGHT,
+      screenHeight = WINDOW_HEIGHT,
       maxModalHeight = screenHeight ? screenHeight * 0.9 : MAX_MODAL_HEIGHT,
       defaultModalHeight = maxModalHeight < DEFAULT_MODAL_HEIGHT
         ? maxModalHeight
@@ -107,6 +87,8 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       disableCloseOnBackgroundPress = false,
       disableSnapToBottom = false,
       backgroundClickable = false,
+      onEndReached,
+      onEndReachedThreshold = 100,
     }: Props,
     ref: React.Ref<AnimatedScrollModalRef>,
   ) => {
@@ -128,12 +110,12 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     useImperativeHandle<AnimatedScrollModalRef, AnimatedScrollModalRef>(
       ref,
       () => ({
-        open,
-        close,
+        open: openModal,
+        close: closeModal,
       }),
     );
 
-    const open = () => {
+    const openModal = () => {
       setModalVisible(true);
       translateYModal.value = withTiming(screenHeight - defaultModalHeight, {
         duration: 500,
@@ -142,8 +124,10 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       translateYContent.value = 0;
     };
 
-    const close = () => {
-      if (onClose) onClose();
+    const closeModal = () => {
+      if (onClose) {
+        onClose();
+      }
       if (translateYModal.value !== screenHeight) {
         translateYModal.value = withTiming(screenHeight, { duration: 500 });
         setTimeout(() => {
@@ -155,120 +139,22 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       setModalVisible(false);
     };
 
-    const disableKeyboard = () => {
-      Keyboard.dismiss();
-    };
-
-    const onGestureEvent = useAnimatedGestureHandler({
-      onStart: (_, ctx) => {
-        // On start needs to set context offsetY from last gesture (otherwise gesture will reset)
-        if (translateYLevelIndicator.value <= screenHeight - maxModalHeight) {
-          // Set content translation offset
-          ctx.offsetY =
-            translateYContent.value + (screenHeight - maxModalHeight);
-        } else {
-          // Set modal translation offset
-          ctx.offsetY = translateYModal.value;
-        }
-      },
-      onActive: (event, ctx) => {
-        const pos = event.translationY + ctx.offsetY;
-        // Save current value into global translation variable
-        translateYLevelIndicator.value = pos;
-
-        // Check if content translation OR else modal translation
-        if (pos <= screenHeight - maxModalHeight) {
-          runOnJS(disableKeyboard)();
-          // Fix modal translation if gesture moved too quickly and values were skipped
-          if (translateYModal.value !== screenHeight - maxModalHeight) {
-            translateYModal.value = screenHeight - maxModalHeight;
-          }
-
-          // Check if pos is not out of content scroll
-          if (
-            pos - (screenHeight - maxModalHeight) > contentHeight &&
-            contentHeight !== 0
-          ) {
-            translateYContent.value = pos - (screenHeight - maxModalHeight);
-          }
-        } else {
-          // Fix content translation if gesture moved too quickly and values were skipped
-          if (translateYContent.value !== 0) {
-            translateYContent.value = 0;
-          }
-          translateYModal.value = pos;
-        }
-      },
-      onEnd: (evt, ctx) => {
-        const { velocityY, translationY } = evt;
-        if (translationY + ctx.offsetY <= screenHeight - maxModalHeight) {
-          // Currently scrolling content, using Decay to do scroll animation
-          translateYContent.value = withDecay({
-            velocity: evt.velocityY,
-            clamp: [contentHeight, 0],
-          });
-        } else {
-          // Currently scrolling modal height : will snap to offset..
-          // If velocity is high, snaping in the velocity direction
-          if (Math.abs(velocityY) > HIGH_VELOCITY) {
-            velocityY > 0
-              ? snapToPoint(
-                  // TODO: CLEAN
-                  SnapPoint.Bottom,
-                  velocityY,
-                  translateYModal,
-                  close,
-                  maxModalHeight,
-                  screenHeight,
-                  disableSnapToBottom,
-                  defaultModalHeight,
-                )
-              : snapToPoint(
-                  SnapPoint.Top,
-                  velocityY,
-                  translateYModal,
-                  close,
-                  maxModalHeight,
-                  screenHeight,
-                  disableSnapToBottom,
-                  defaultModalHeight,
-                );
-          }
-          // Snapping to the closest point
-          if (
-            Math.abs(
-              maxModalHeight - (screenHeight - (translationY + ctx.offsetY)),
-            ) > // Top snap point
-            Math.abs(screenHeight - (translationY + ctx.offsetY)) // Bottom snap point
-          ) {
-            snapToPoint(
-              SnapPoint.Bottom,
-              velocityY,
-              translateYModal,
-              close,
-              maxModalHeight,
-              screenHeight,
-              disableSnapToBottom,
-              defaultModalHeight,
-            );
-          } else {
-            snapToPoint(
-              SnapPoint.Top,
-              velocityY,
-              translateYModal,
-              close,
-              maxModalHeight,
-              screenHeight,
-              disableSnapToBottom,
-              defaultModalHeight,
-            );
-          }
-        }
-      },
-    });
+    const { onGestureEvent } = useScrollHandler(
+      contentHeight,
+      maxModalHeight,
+      translateYLevelIndicator,
+      translateYContent,
+      translateYModal,
+      closeModal,
+      onEndReached,
+      onEndReachedThreshold,
+      screenHeight,
+      disableSnapToBottom,
+      defaultModalHeight,
+    );
 
     const onLayout = (event: LayoutChangeEvent) => {
-      // Represents the height of the fotter hiding the scroll view
+      // Represents the height of the footer hiding the scroll view
       const additionalHeight =
         (footer?.height ?? 0) +
         (scrollIndicator ? SCROLLABLE_INDICATOR_HEIGHT : 0);
@@ -288,12 +174,12 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       setContentHeight(-Math.abs(height - maxModalHeight + additionalHeight));
     };
 
-    const actionButtonsStyle = useAnimatedStyle(() => {
+    const footerStyle = useAnimatedStyle(() => {
       const opacity = interpolate(
         translateYModal.value,
         [
-          screenHeight - ACTION_BUTTONS_MIN_OPACITY,
-          screenHeight - ACTION_BUTTONS_MAX_OPACITY,
+          screenHeight - FOOTER_MIN_OPACITY_POS,
+          screenHeight - FOOTER_MAX_OPACITY_POS,
         ],
         [0, 1],
       );
@@ -329,10 +215,10 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
           <Container>
             <TouchableWithoutFeedback
               disabled={disableCloseOnBackgroundPress}
-              onPress={() => close()}>
+              onPress={closeModal}>
               <AnimatedBackgroundOpacity style={backgroundOpacityStyle} />
             </TouchableWithoutFeedback>
-            <PanGestureHandler onGestureEvent={onGestureEvent}>
+            <PanGestureHandler {...{ onGestureEvent }}>
               <AnimatedContainerModal
                 height={maxModalHeight}
                 backgroundColor={backgroundColor}
@@ -345,8 +231,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                 <ScrollView scrollEnabled={false}>
                   <Animated.View
                     style={[scrollContentTranslationStyle, containerStyle]}
-                    onLayout={onLayout}
-                    {...{ backgroundColor }}>
+                    {...{ backgroundColor, onLayout }}>
                     {children}
                   </Animated.View>
                 </ScrollView>
@@ -355,7 +240,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
             {footer && (
               <AnimatedContainerFooter
                 bottom={footer?.position ?? 0}
-                style={actionButtonsStyle}>
+                style={footerStyle}>
                 {footer.component}
               </AnimatedContainerFooter>
             )}
@@ -365,47 +250,3 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     );
   },
 );
-
-// Worklet cannot be declared in the body of the component
-const snapToPoint = (
-  point: SnapPoint,
-  velocityY: number,
-  translateYModal: Animated.SharedValue<number>,
-  close: () => void,
-  maxModalHeight: number,
-  screenHeight: number,
-  disableSnapToBottom: boolean,
-  defaultModalHeight: number,
-) => {
-  'worklet';
-  switch (point) {
-    case SnapPoint.Top:
-      // Snap up to open fully the modal
-      translateYModal.value = withSpring(screenHeight - maxModalHeight, {
-        velocity: velocityY,
-        overshootClamping: true,
-        damping: 20,
-      });
-      break;
-    case SnapPoint.Bottom:
-      // Snap down to close modal
-      translateYModal.value = withSpring(
-        disableSnapToBottom ? screenHeight - defaultModalHeight : screenHeight,
-        {
-          velocity: velocityY,
-          overshootClamping: true,
-          damping: 20,
-          stiffness: 150,
-        },
-        () => {
-          if (disableSnapToBottom) {
-            return;
-          }
-          runOnJS(close)();
-        },
-      );
-      break;
-    default:
-      break;
-  }
-};
