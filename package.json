@@ -1,6 +1,6 @@
 {
   "name": "react-native-animated-scroll-modal",
-  "version": "0.6.7",
+  "version": "0.7.0",
   "description": "Animated Modal component for React Native, A modal that can be extended using the finger and once the maximum height is reached the content will then start scrolling itself without having to release the finger. Compatible with Android & iOS.",
   "main": "./src/index.ts",
   "scripts": {
@@ -16,11 +16,13 @@
     "react-native-reanimated": ">=2.2.0"
   },
   "dependencies": {
-    "react-native-reanimated": "^2.4.1",
     "react-native-gesture-handler": "2.4.2",
-    "styled-components": "^5.0.1"
+    "react-native-reanimated": "^2.4.1",
+    "styled-components": "^5.0.1",
+    "use-debounce": "^8.0.1"
   },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^3.0.3",
     "@types/react": "^16.9.46",
     "@types/react-native": "^0.63.4",
     "@typescript-eslint/eslint-plugin": "3.8.0",
@@ -34,9 +36,9 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.20.5",
     "eslint-plugin-standard": "4.0.1",
-    "typescript": "3.9.7",
+    "husky": "^8.0.1",
     "standard-version": "^9.5.0",
-    "husky": "^8.0.1"
+    "typescript": "3.9.7"
   },
   "keywords": [
     "react-native",
@@ -63,5 +65,22 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "standard-version": {
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Bug Fixes"
+      },
+      {
+        "type": "refactor",
+        "hidden": false,
+        "section": "Refactors"
+      }
+    ]
   }
 }

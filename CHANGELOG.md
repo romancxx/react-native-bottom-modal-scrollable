@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.7...v0.7.0) (2022-07-06)
+
+
+### Features
+
+* **onendreached:** adding new props onEndReached and onEndReachedThreshold ([a08914e](https://github.com/Nazort/animated-scroll-modal/commit/a08914e7d4265962c5bad95d37c41c129919077b))
+
+
+### Refactors
+
+* **clean:** cleaning & splitting code, typing, fixing prettier ([8aa3e4f](https://github.com/Nazort/animated-scroll-modal/commit/8aa3e4fe054f22da266fabbfe04427aacdea69d7))
+
 ### [0.6.7](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.6...v0.6.7) (2022-07-05)
 
 ### [0.6.6](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.5...v0.6.6) (2022-07-05)
