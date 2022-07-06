@@ -1,6 +1,6 @@
-import {View} from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components';
-export const SCROLLABLE_INDICATOR_HEIGHT = 25;
+import { DRAG_INDICATOR_HEIGHT } from '../constants';
 
 export const ContainerNonClickable = styled(View)`
   position: absolute;
@@ -46,8 +46,8 @@ interface BgColorProps {
   backgroundColor: string;
 }
 
-export const ContainerScrollIndicator = styled(View)<BgColorProps>`
-  height: ${SCROLLABLE_INDICATOR_HEIGHT}px;
+export const ContainerDragIndicator = styled(View)<BgColorProps>`
+  height: ${DRAG_INDICATOR_HEIGHT}px;
   justify-content: center;
   align-items: center;
   border-top-left-radius: 16px;
@@ -56,7 +56,7 @@ export const ContainerScrollIndicator = styled(View)<BgColorProps>`
   z-index: 2;
 `;
 
-export const ScrollIndicator = styled(View)`
+export const DragIndicator = styled(View)`
   background-color: #6d6d6d;
   width: ${55}px;
   height: ${5}px;

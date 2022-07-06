@@ -14,11 +14,10 @@ import {
   BackgroundOpacity,
   ContainerNonClickable,
   ContainerClickable,
-  ContainerScrollIndicator,
-  ScrollIndicator,
+  ContainerDragIndicator,
   ContainerFooter,
   ContainerModal,
-  SCROLLABLE_INDICATOR_HEIGHT,
+  DragIndicator,
 } from './styled/AnimatedScrollModal.styled';
 import Animated, {
   useSharedValue,
@@ -30,6 +29,7 @@ import { PanGestureHandler, ScrollView } from 'react-native-gesture-handler';
 import { useScrollHandler } from './hooks/useScrollHandler';
 import {
   DEFAULT_MODAL_HEIGHT,
+  DRAG_INDICATOR_HEIGHT,
   FOOTER_MAX_OPACITY_POS,
   FOOTER_MIN_OPACITY_POS,
   MAX_MODAL_HEIGHT,
@@ -46,7 +46,7 @@ interface Props {
   contentStaticHeight?: number;
   onClose?: () => void;
   containerStyle?: StyleProp<ViewStyle>;
-  scrollIndicator?: boolean;
+  dragIndicator?: boolean;
   screenHeight?: number;
   disableBackgroundOpacity?: boolean;
   disableCloseOnBackgroundPress?: boolean;
@@ -68,7 +68,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       children,
       backgroundColor = '#fff',
       footer,
-      scrollIndicator = true,
+      dragIndicator = true,
       screenHeight = WINDOW_HEIGHT,
       maxModalHeight = screenHeight ? screenHeight * 0.9 : MAX_MODAL_HEIGHT,
       defaultModalHeight = maxModalHeight < DEFAULT_MODAL_HEIGHT
@@ -146,8 +146,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     const onLayout = (event: LayoutChangeEvent) => {
       // Represents the height of the footer hiding the scroll view
       const additionalHeight =
-        (footer?.height ?? 0) +
-        (scrollIndicator ? SCROLLABLE_INDICATOR_HEIGHT : 0);
+        (footer?.height ?? 0) + (dragIndicator ? DRAG_INDICATOR_HEIGHT : 0);
 
       if (contentStaticHeight) {
         setContentHeight(
@@ -213,10 +212,10 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
                 height={maxModalHeight}
                 backgroundColor={backgroundColor}
                 style={scrollModalTranslationStyle}>
-                {scrollIndicator && (
-                  <ContainerScrollIndicator {...{ backgroundColor }}>
-                    <ScrollIndicator />
-                  </ContainerScrollIndicator>
+                {dragIndicator && (
+                  <ContainerDragIndicator {...{ backgroundColor }}>
+                    <DragIndicator />
+                  </ContainerDragIndicator>
                 )}
                 <ScrollView scrollEnabled={false}>
                   <Animated.View
