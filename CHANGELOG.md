@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/Nazort/animated-scroll-modal/compare/v0.7.0...v0.7.1) (2022-07-06)
+
+
+### Bug Fixes
+
+* **styled:** fixing styled import & updating some docs ([3a307e0](https://github.com/Nazort/animated-scroll-modal/commit/3a307e078528ed9a0a190b5300be5517fe7e1932))
+
 ## [0.7.0](https://github.com/Nazort/animated-scroll-modal/compare/v0.6.7...v0.7.0) (2022-07-06)
 
 
