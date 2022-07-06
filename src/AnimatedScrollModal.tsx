@@ -37,12 +37,6 @@ import {
 } from './constants';
 import { AbsoluteFooter, AnimatedScrollModalRef } from './types';
 
-//TODO: ADD README
-//TODO: ADD GITIGNORE
-//TODO: ADD INDICATOR CUSTOM STYLE
-//TODO: ADD SNAP TO MID OFFSET?
-// TODO: SHAKE ON DRAG ?
-
 interface Props {
   children: ReactNode;
   footer?: AbsoluteFooter;
@@ -80,7 +74,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       defaultModalHeight = maxModalHeight < DEFAULT_MODAL_HEIGHT
         ? maxModalHeight
         : screenHeight / 2,
-      contentStaticHeight = undefined,
+      contentStaticHeight,
       onClose,
       containerStyle,
       disableBackgroundOpacity = false,
@@ -95,15 +89,11 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     const [modalVisible, setModalVisible] = useState(false);
     const [contentHeight, setContentHeight] = useState<number>(0);
 
-    /**
-     * RN reanimated animation values :
-     * - translateYModal > Translation Y axis of the modal from bottom to MAX_MODAL_HEIGHT
-     * - translateYContent > Translation Y axis of the content of the modal once the modal translation reached MAX_MODAL_HEIGHT
-     * - translateYLevelIndicator > Translation Y axis of translateYModal & translateYContent, starts from the bottom of the screen
-     * to the end of the content, used to save current level to set the context on gesture start
-     */
+    // Translation Y axis of the modal from bottom of the screen to MAX_MODAL_HEIGHT
     const translateYModal = useSharedValue(screenHeight);
+    // Translation Y axis of the content of the modal starting once the modal reached MAX_MODAL_HEIGHT to contentHeight
     const translateYContent = useSharedValue(0);
+    // Translation Y axis of translateYModal & translateYContent, starts from the bottom of the screen to the end of the content, used to save current level on gesture start
     const translateYLevelIndicator = useSharedValue(screenHeight);
 
     // Forward functions
@@ -166,11 +156,11 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
         return;
       }
       const { height } = event.nativeEvent.layout;
-      // Use content of children view to define scroll limit
       if (height + additionalHeight < maxModalHeight) {
         setContentHeight(0);
         return;
       }
+      // Use height of children view to define scroll limit
       setContentHeight(-Math.abs(height - maxModalHeight + additionalHeight));
     };
 
