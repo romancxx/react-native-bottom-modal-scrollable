@@ -4,16 +4,14 @@ A Bottom Modal component for React Native that can be dragged to the maximum hei
 
 ## Overview
 
-<p align="center">
-<img src="https://i.imgur.com/K6o4qIH.gifv" height="500" />
-</p>
+![demo](https://i.imgur.com/K6o4qIH.gifv)
 
 ## Installation
 
 This package requires react-native-reanimated 2 and react-native-gesture-handler to work.
 
 - [Reanimated Installation](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation)
-- [Gesture handler Installation](https://docs.swmansion.com/react-native-gesture-handler/docs/installation)
+- [Gesture handler Installation](https://docs.swmansion.com/react-native-gesture-handler/docs/installation)  
   <em>Don't forget to wrap your app with `<GestureHandlerRootView>` as described in the doc</em>
 
 Then :
