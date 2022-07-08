@@ -4,7 +4,7 @@ A Bottom Modal component for React Native that can be dragged to the maximum hei
 
 ## Overview
 
-![demo](https://i.imgur.com/K6o4qIH.gifv)
+![demo](https://i.imgur.com/K6o4qIH.gif)
 
 ## Installation
 

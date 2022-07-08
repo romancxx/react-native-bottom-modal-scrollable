@@ -63,11 +63,11 @@ lib/
 .env
 
 #test files example
-./example/src/constants.ts
-./example/src/types.ts
-./example/src/utils.ts
-./example/src/index.ts
-./example/src/styled/AnimatedScrollModal.styled.ts
-./example/src/AnimatedScrollModal.tsx
-./example/src/hooks/useScrollHandler.ts
-./updatePackage.sh
+example/src/constants.ts
+example/src/types.ts
+example/src/utils.ts
+example/src/index.ts
+example/src/styled/AnimatedScrollModal.styled.ts
+example/src/AnimatedScrollModal.tsx
+example/src/hooks/useScrollHandler.ts
+updatePackage.sh
