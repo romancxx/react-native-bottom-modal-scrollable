@@ -1,6 +1,6 @@
-import { AnimatedScrollModal } from './AnimatedScrollModal';
-import { AnimatedScrollModalRef } from './types';
+import { BottomModalScrollable } from './BottomModalScrollable';
+import { BottomModalScrollableRef } from './types';
 
-export { AnimatedScrollModal };
+export { BottomModalScrollable };
 
-export type { AnimatedScrollModalRef };
+export type { BottomModalScrollableRef };

@@ -2,15 +2,15 @@ import React from 'react';
 import { View, StyleSheet, Text, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedScrollModal, AnimatedScrollModalRef } from '..';
+import { BottomModalScrollable, BottomModalScrollableRef } from '..';
 
 interface Props {}
 
-export const ListsModal = React.forwardRef<AnimatedScrollModalRef, Props>(
+export const ListsModal = React.forwardRef<BottomModalScrollableRef, Props>(
   ({}, ref) => {
     const { bottom } = useSafeAreaInsets();
     return (
-      <AnimatedScrollModal
+      <BottomModalScrollable
         ref={ref}
         containerStyle={{ paddingBottom: bottom }}
         onEndReached={() => console.log('On end reached!')}

@@ -18,7 +18,7 @@ import {
   ContainerFooter,
   ContainerModal,
   DragIndicator,
-} from './styled/AnimatedScrollModal.styled';
+} from './styled/BottomModalScrollable.styled';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -35,7 +35,7 @@ import {
   MAX_MODAL_HEIGHT,
   WINDOW_HEIGHT,
 } from './constants';
-import { AbsoluteFooter, AnimatedScrollModalRef } from './types';
+import { AbsoluteFooter, BottomModalScrollableRef } from './types';
 
 interface Props {
   children: ReactNode;
@@ -62,7 +62,10 @@ const AnimatedContainerFooter =
   Animated.createAnimatedComponent(ContainerFooter);
 const AnimatedContainerModal = Animated.createAnimatedComponent(ContainerModal);
 
-export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
+export const BottomModalScrollable = forwardRef<
+  BottomModalScrollableRef,
+  Props
+>(
   (
     {
       children,
@@ -84,7 +87,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
       onEndReached,
       onEndReachedThreshold = 100,
     }: Props,
-    ref: React.Ref<AnimatedScrollModalRef>,
+    ref: React.Ref<BottomModalScrollableRef>,
   ) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [contentHeight, setContentHeight] = useState<number>(0);
@@ -97,7 +100,7 @@ export const AnimatedScrollModal = forwardRef<AnimatedScrollModalRef, Props>(
     const translateYLevelIndicator = useSharedValue(screenHeight);
 
     // Forward functions
-    useImperativeHandle<AnimatedScrollModalRef, AnimatedScrollModalRef>(
+    useImperativeHandle<BottomModalScrollableRef, BottomModalScrollableRef>(
       ref,
       () => ({
         open: openModal,

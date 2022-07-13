@@ -5,7 +5,7 @@ export enum SnapPoint {
   Bottom = 'Bottom',
 }
 
-export type AnimatedScrollModalRef = {
+export type BottomModalScrollableRef = {
   open: () => void;
   close: () => void;
 };

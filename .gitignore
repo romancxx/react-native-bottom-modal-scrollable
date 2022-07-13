@@ -67,7 +67,7 @@ example/src/constants.ts
 example/src/types.ts
 example/src/utils.ts
 example/src/index.ts
-example/src/styled/AnimatedScrollModal.styled.ts
-example/src/AnimatedScrollModal.tsx
+example/src/styled/BottomModalScrollable.styled.ts
+example/src/BottomModalScrollable.tsx
 example/src/hooks/useScrollHandler.ts
 updatePackage.sh

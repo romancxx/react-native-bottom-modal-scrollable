@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { AnimatedScrollModal, AnimatedScrollModalRef } from '..';
+import { BottomModalScrollable, BottomModalScrollableRef } from '..';
 import { Content } from '../components/Content';
 
 interface Props {}
@@ -10,12 +10,12 @@ interface Props {}
 const FOOTER_HEIGHT = 75;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export const FooterModal = React.forwardRef<AnimatedScrollModalRef, Props>(
+export const FooterModal = React.forwardRef<BottomModalScrollableRef, Props>(
   ({}, ref) => {
     const { bottom } = useSafeAreaInsets();
 
     return (
-      <AnimatedScrollModal
+      <BottomModalScrollable
         ref={ref}
         containerStyle={styles.containerModalStyle}
         children={<Content title="Footer Modal" />}

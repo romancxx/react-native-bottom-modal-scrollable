@@ -6,16 +6,16 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { AnimatedScrollModal, AnimatedScrollModalRef } from '../';
+import { BottomModalScrollable, BottomModalScrollableRef } from '../';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 interface Props {}
 
-export const SmallModal = React.forwardRef<AnimatedScrollModalRef, Props>(
+export const SmallModal = React.forwardRef<BottomModalScrollableRef, Props>(
   ({}, ref) => {
     return (
-      <AnimatedScrollModal
+      <BottomModalScrollable
         ref={ref}
         maxModalHeight={SCREEN_HEIGHT * 0.2}
         disableCloseOnBackgroundPress

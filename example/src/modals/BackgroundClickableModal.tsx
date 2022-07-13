@@ -1,18 +1,18 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { AnimatedScrollModal, AnimatedScrollModalRef } from '../';
+import { BottomModalScrollable, BottomModalScrollableRef } from '../';
 
 interface Props {}
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const BackgroundClickableModal = React.forwardRef<
-  AnimatedScrollModalRef,
+  BottomModalScrollableRef,
   Props
 >(({}, ref) => {
   return (
-    <AnimatedScrollModal
+    <BottomModalScrollable
       backgroundClickable
       ref={ref}
       defaultModalHeight={SCREEN_HEIGHT / 4}

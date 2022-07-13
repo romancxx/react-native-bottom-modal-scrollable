@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { AnimatedScrollModal, AnimatedScrollModalRef } from '../';
+import { BottomModalScrollable, BottomModalScrollableRef } from '../';
 import { Content } from '../components/Content';
 
 interface Props {}
 
-export const BasicModal = React.forwardRef<AnimatedScrollModalRef, Props>(
+export const BasicModal = React.forwardRef<BottomModalScrollableRef, Props>(
   ({}, ref) => {
     return (
-      <AnimatedScrollModal
+      <BottomModalScrollable
         ref={ref}
         containerStyle={styles.containerModalStyle}
         children={<Content title="Basic Modal" />}

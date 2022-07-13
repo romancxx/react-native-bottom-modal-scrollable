@@ -34,11 +34,11 @@ npm install react-native-bottom-scrollable-modal
 
 ```js
 
-import { AnimatedScrollModal, AnimatedScrollModalRef } from  'react-native-bottom-modal';
+import { BottomModalScrollable, BottomModalScrollableRef } from  'react-native-bottom-modal';
 
 ...
 
-const modalRef = useRef<AnimatedScrollModalRef>(null);
+const modalRef = useRef<BottomModalScrollableRef>(null);
 
 ...
 
@@ -47,7 +47,7 @@ useEffect(()  => {
 }, [])
 
 return (
-  <AnimatedScrollModal
+  <BottomModalScrollable
     ref={ref}
     children={
       <View>
