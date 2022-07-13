@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { BottomModalScrollable, BottomModalScrollableRef } from '../';
+import {
+  BottomModalScrollable,
+  BottomModalScrollableRef,
+} from 'react-native-bottom-modal-scrollable';
 import { Content } from '../components/Content';
 
 interface Props {}

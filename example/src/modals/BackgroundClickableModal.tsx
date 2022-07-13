@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, Dimensions, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { BottomModalScrollable, BottomModalScrollableRef } from '../';
+import {
+  BottomModalScrollable,
+  BottomModalScrollableRef,
+} from 'react-native-bottom-modal-scrollable';
 
 interface Props {}
 

@@ -1,7 +1,7 @@
 {
   "name": "react-native-bottom-modal-scrollable",
   "version": "0.7.2",
-  "description": "Animated Modal component for React Native, A modal that can be extended using the finger and once the maximum height is reached the content will then start scrolling itself without having to release the finger. Compatible with Android & iOS.",
+  "description": "A Bottom Modal component for React Native that can be dragged to the maximum height and without releasing the finger off the screen scroll its content to provide a smooth user experience. Fully customizable and compatible with Android & iOS. Built using react-native-reanimated 2.",
   "main": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -43,8 +43,10 @@
   "keywords": [
     "react-native",
     "modal",
+    "bottom-modal",
     "animated",
     "scrollable",
+    "bottom",
     "smooth",
     "react",
     "native",
@@ -52,6 +54,10 @@
     "scrollview",
     "scroll",
     "scrolling",
+    "drag",
+    "dragging",
+    "gesture",
+    "reanimated",
     "snap",
     "android",
     "ios",

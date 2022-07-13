@@ -2,7 +2,10 @@ import React from 'react';
 import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BottomModalScrollable, BottomModalScrollableRef } from '..';
+import {
+  BottomModalScrollable,
+  BottomModalScrollableRef,
+} from 'react-native-bottom-modal-scrollable';
 import { Content } from '../components/Content';
 
 interface Props {}

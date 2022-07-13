@@ -1,5 +1,5 @@
-import { BottomModalScrollableRef } from './src';
 import React, { useEffect, useRef } from 'react';
+import { BottomModalScrollableRef } from 'react-native-bottom-modal-scrollable';
 import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BasicModal } from './src/modals/BasicModal';
@@ -8,8 +8,6 @@ import { FooterModal } from './src/modals/FooterModal';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BackgroundClickableModal } from './src/modals/BackgroundClickableModal';
 import { ListsModal } from './src/modals/ListsModal';
-
-// TODO: IN DOC BACKGROUND CLICKABLE DOESNT WORK WITH ABSOLUTE BOTTOM CHILDREN
 
 const App = () => {
   const basicModalRef = useRef<BottomModalScrollableRef>(null);

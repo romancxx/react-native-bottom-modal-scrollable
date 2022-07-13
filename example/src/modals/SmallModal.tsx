@@ -6,7 +6,10 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import { BottomModalScrollable, BottomModalScrollableRef } from '../';
+import {
+  BottomModalScrollable,
+  BottomModalScrollableRef,
+} from 'react-native-bottom-modal-scrollable';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
