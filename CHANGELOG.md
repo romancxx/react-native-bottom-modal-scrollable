@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/Nazort/react-native-bottom-modal-scrollable/compare/v0.7.1...v0.7.2) (2022-07-13)
+
+
+### Refactors
+
+* **drag-indicator:** rename props scrollIndicator in dragIndicator ([a915827](https://github.com/Nazort/react-native-bottom-modal-scrollable/commit/a915827e4527fb82cd6201f4e4955dc7ad76faca))
+* **package-name:** changing package name ([42e5aa7](https://github.com/Nazort/react-native-bottom-modal-scrollable/commit/42e5aa7969ca6a8f0fbac4eaec79842576f95555))
+
 ### [0.7.1](https://github.com/Nazort/animated-scroll-modal/compare/v0.7.0...v0.7.1) (2022-07-06)
 
 
